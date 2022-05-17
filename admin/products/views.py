@@ -1,9 +1,14 @@
+# Handles the CRUD Logic on the admin end of the application 
+
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response 
+from rest_framework.views import APIView
 
-from .models import Product
+from .models import Product, User
 from .serializers import ProductSerializer
+
+import random 
 
 
 class ProductViewSet(viewsets.ViewSet): 
@@ -11,8 +16,8 @@ class ProductViewSet(viewsets.ViewSet):
     def list(self, request): 
         #/api/products    GET 
         products = Product.objects.all() 
-        serializer = ProductSerializer(products, many=True) 
-        return Response(serializer.data)
+        serializer = productserializer(products, many=true) 
+        return response(serializer.data)
 
     def create(self, request):  
         #/api/products   POST 
@@ -23,12 +28,35 @@ class ProductViewSet(viewsets.ViewSet):
       
     def retrieve(self, request, pk=None): 
         #/api/products/<str: id?>
-        pass
-    
+        product = Product.objects.get(id=pk)
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+
     def update(self, request, pk=None): 
         #/api/products/<str: id?>
-        pass
+        product = Product.objects.get(id=pk)
+        serializer = ProductSerializer(instance=product, data=request.data)
+        # See if change made is valid 
+        serializer.is_valid(raise_exception=True) 
+        serializer.save() 
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def destroy(self, request, pk=None): 
         #/api/products/<str: id?>
-        pass
+        product = Product.objects.get(id=pk)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+class UserAPIView(APIView): 
+
+    # IDK about this method
+    def get(self, _): 
+        users = User.objects.all()
+        user = random.choice(users) 
+        return Response({
+            'id': user.id
+        })
+
+
