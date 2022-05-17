@@ -1,27 +1,27 @@
 version: '3.9'
-services: 
+services:
   backend:
     build:
       context: .
       dockerfile: Dockerfile
 
-    ports:  
+    ports:
       - 8000:8000
     volumes:
       - .:/app
     depends_on:
       - "db"
     #command: ["./wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
-    
-  db: 
+
+  db:
     image: mysql:5.7.22
-    restart: always 
-    environment: 
-      MYSQL_DATABASE: admin 
+    restart: always
+    environment:
+      MYSQL_DATABASE: admin
       MYSQL_USER: root
-      MYSQL_PASSWORD: root 
-      MYSQL_ROOT_PASSWORD: root 
-    volumes: 
-      - .dbdata:/var/lib/mysql  
-    ports: 
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
       - 33066:3306

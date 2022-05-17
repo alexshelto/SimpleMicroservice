@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+from __future__ import annotations
 
 from pathlib import Path
 
@@ -36,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles', 
-    'rest_framework', 
-    'corsheaders', 
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
     'products',
-] 
+]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -81,11 +82,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'admin',
-        'USER': 'root', 
+        'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'db', 
+        'HOST': 'db',
         'PORT': '3306',
-    }
+    },
 }
 
 
