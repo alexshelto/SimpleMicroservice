@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 
 from .models import Product
 from .models import User
+from .producer import publish  # pika event sender
 from .serializers import ProductSerializer
 
 
@@ -19,6 +20,7 @@ class ProductViewSet(viewsets.ViewSet):
         # /api/products    GET
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
+        publish()
         return Response(serializer.data)
 
     def create(self, request):
