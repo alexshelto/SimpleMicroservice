@@ -1,17 +1,18 @@
-version: '3.9' 
-services:  
-  backend:   
-    build: 
-      context: . 
+version: '3.9'
+services: 
+  backend:
+    build:
+      context: .
       dockerfile: Dockerfile
 
-    ports: 
-      - 8000:8000 #dockerfile port, local host
-    volumes: 
+    ports:  
+      - 8000:8000
+    volumes:
       - .:/app
-    depends_on: # Depends on means that db will run before this does 
-      - db
-
+    depends_on:
+      - "db"
+    #command: ["./wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    
   db: 
     image: mysql:5.7.22
     restart: always 
