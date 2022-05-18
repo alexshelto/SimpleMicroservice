@@ -55,7 +55,6 @@ class ProductViewSet(viewsets.ViewSet):
 
 
 class UserAPIView(APIView):
-
     # IDK about this method
     def get(self, _):
         users = User.objects.all()

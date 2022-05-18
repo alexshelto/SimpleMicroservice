@@ -1,5 +1,12 @@
-# pika used to send events
+from products.models import Product  # noreorder
+import json
+import os
+
+import django
 import pika
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'admin.settings')  # noreorder
+django.setup()  # noreorder
 
 
 params = pika.URLParameters(
@@ -15,7 +22,14 @@ channel.queue_declare(queue='admin')
 
 def callback(channel, method, properties, body):
     print('received in admin: ')
-    print(body)
+    _id = json.loads(body)
+    print(_id)
+
+    if properties.content_type == 'product_liked':
+        product = Product.objects.get(id=_id)
+        product.likes += 1
+        product.save()
+        print('Incremented like')
 
 
 channel.basic_consume(
