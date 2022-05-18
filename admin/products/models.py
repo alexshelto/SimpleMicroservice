@@ -1,12 +1,15 @@
+from __future__ import annotations
+
 from django.db import models
 
 # Create your models here
-  
-class Product(models.Model):  
-    title = models.CharField(max_length=200) 
-    image = models.CharField(max_length=200) 
+
+
+class Product(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.CharField(max_length=200)
     likes = models.PositiveIntegerField(default=0)
-     
-  
-class User(models.Model):  
+
+
+class User(models.Model):
     pass

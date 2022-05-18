@@ -4,17 +4,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: 'python manage.py runserver 0.0.0.0:8000'
-    restart: on-failure:10
+    command: 'python app.py'
+    restart: on-failure:5
+
 
     ports:
-      - 8000:8000
+      - 8001:5000
     volumes:
-      - .:/app
+      - .:/main
     depends_on:
       - "db"
-    #command: ["./wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
-
   queue:
     build:
       context: .
@@ -27,11 +26,11 @@ services:
     image: mysql:5.7.22
     restart: always
     environment:
-      MYSQL_DATABASE: admin
+      MYSQL_DATABASE: main_db
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - .dbdata:/var/lib/mysql
     ports:
-      - 33066:3306
+      - 33067:3306
