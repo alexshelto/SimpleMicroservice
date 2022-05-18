@@ -5,12 +5,13 @@ services:
       context: .
       dockerfile: Dockerfile
     command: 'python app.py'
+    restart: on-failure:5
 
 
     ports:
       - 8001:5000
     volumes:
-      - .:/app
+      - .:/main
     depends_on:
       - "db"
   queue:
