@@ -18,8 +18,21 @@ def callback(channel, method, properties, body):
     print(body)
 
 
-channel.basic_consume(queue='admin', on_message_callback=callback)
+channel.basic_consume(
+    queue='admin', on_message_callback=callback, auto_ack=True)
 
 print('started consuming')
 channel.start_consuming()
 channel.close()
+
+
+"""
+
+ADMIN:
+    consumer channel: "ADMIN"
+    producer channel: "MAIN"
+
+MAIN:
+    consumer channel: "MAIN"
+
+"""
